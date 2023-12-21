@@ -5,16 +5,16 @@
         @csrf
         @method('POST')
         @if (Session::get('failed'))
-            <div class="px-2 py-4 bg-red-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('failed')}} </div>
+            <div class="px-2 py-4 bg-red-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('failed') }} </div>
         @endif
         @if (Session::get('logout'))
-            <div class="px-2 py-4 bg-indigo-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('logout')}} </div>
+            <div class="px-2 py-4 bg-indigo-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('logout') }} </div>
         @endif
         @if (Session::get('canAccess'))
-            <div class="px-2 py-4 bg-yellow-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('canAccess')}} </div>
+            <div class="px-2 py-4 bg-yellow-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('canAccess') }} </div>
         @endif
         @if (Session::get('AlreadyAccess'))
-            <div class="px-2 py-4 bg-yellow-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('AlreadyAccess')}} </div>
+            <div class="px-2 py-4 bg-yellow-300 bg-opacity-60 mb-10 rounded-md">{{ Session::get('AlreadyAccess') }} </div>
         @endif
         <div class="relative z-0 w-full mb-5 group">
             <input type="email" name="email" id="email"

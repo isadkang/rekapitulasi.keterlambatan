@@ -108,9 +108,11 @@ class UserController extends Controller
         return redirect()->route('user.home')->with('success', 'Berhasil Menghapus Data');
     }
 
-    
-    public function loginAuth(Request $request) 
+
+    public function loginAuth(Request $request)
     {
+
+
         $request->validate([
             'email' => 'required|email:dns',
             'password' => 'required'
@@ -118,7 +120,12 @@ class UserController extends Controller
 
         $user = $request->only(['email', 'password']);
         if (Auth::attempt($user)) {
-            return redirect()->route('home.page');
+            $role = Auth::user();
+            if ($role->role == 'admin') {
+                return redirect()->route('home.page');
+            } else if ($role->role == 'ps') {
+                return redirect()->route('pemb.ps.home');
+            }
         } else {
             return redirect()->back()->with('failed', 'Proses login gagal, silahkan coba lagi dengan data yang benar!');
         }

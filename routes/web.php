@@ -99,9 +99,9 @@ Route::middleware(['IsLogin', 'IsAdmin'])->group(function () {
 });
 
 Route::middleware(['IsLogin', 'IsPs'])->group(function () {
-    Route::prefix('/ps')->name('ps.')->group(function () {
+    Route::prefix('/ps')->name('pemb.')->group(function () {
         Route::get('/dashboard', function () {
-            return view('pembimbing.home');
+            return view('pages.pembimbing.home');
         })->name('ps.home');
         
         Route::prefix('/late')->name('late.')->group(function () {
