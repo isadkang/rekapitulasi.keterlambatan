@@ -46,7 +46,7 @@ Route::get('/error-permission', function () {
 
 Route::middleware(['IsLogin', 'IsAdmin'])->group(function () {
     Route::get('/home', function () {
-        return view('home');
+        return view('pages.admin.home');
     })->name('home.page');
 
 

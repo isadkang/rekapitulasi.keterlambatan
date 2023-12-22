@@ -3,12 +3,13 @@
 @section('content')
     <div class="mt-5 max-w-full mx-10">
         <div class="container mb-5">
-            <h2 class="text-3xl font-semibold mb-2">Tambah Data Rayon</h2>
-            <p>Home / Data Rayon / Tambah Data Rayon</p>
+            <h2 class="text-3xl font-semibold mb-2">Edit Data Rayon</h2>
+            <p>Home / Data Rayon / Edit Data Rayon</p>
         </div>
         <div class="container px-2 py-8 bg-slate-100 rounded-md shadow-md">
-            <form action="{{ route('rayon.store') }}" method="POST">
+            <form action="{{ route('rayon.update', $rayon['id']) }}" method="POST">
                 @csrf
+                @method('PATCH')
 
                 @if ($errors->all())
                     <ul class="bg-red-500 rounded-md max-w-sm py-2 mx-2  bg-opacity-60">
@@ -19,17 +20,16 @@
                 @endif
                 <div class="mb-5">
                     <label for="rayon" class="block mb-2 font-semibold">Rayon</label>
-                    <input type="text" name="rayon" id="rayon" placeholder="Masukan Rayon"
-                        class="w-full rounded-md">
+                    <input value="{{ $rayon->rayon }}" type="text" name="rayon" id="rayon"
+                        placeholder="Masukan Rayon" class="w-full rounded-md">
                 </div>
                 <div class="mb-5">
                     <label for="user_id" class="block mb-2 font-semibold">Pembimbing Siswa</label>
                     <select name="user_id" id="user_id" class="w-full rounded-md">
-                        <option selected disabled hidden>Pilih</option>
-                        @foreach ($user as $item)
-                            <option value="{{ $item->id }}">{{ $item->name}}</option>
-                        @endforeach
-
+                        <option selected hidden value="{{ $rayon->user->id }}">{{ $rayon->user->name }}</option>
+                            @if ($rayon->user->role === 'ps')
+                                <option value="{{ $rayon->user->id }}">{{ $rayon->user->name }}</option>
+                            @endif
                     </select>
                 </div>
                 <button type="submit"

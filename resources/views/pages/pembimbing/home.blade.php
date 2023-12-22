@@ -3,8 +3,8 @@
     @section('content')
         <div class="mt-5 max-w-full mx-10">
             <div class="container mb-5">
-                <h2 class="text-3xl font-semibold mb-2">Dashboard</h2>
-                <p>{{ Auth::user()->name }} / Dashboard</p>
+                <h2 class="text-3xl font-semibold mb-2">Dashboard, {{ Auth::user()->name }} </h2>
+                <p>Home / Dashboard</p>
             </div>
 
             @if (Session::get('success'))

@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index()
     {
         $user = User::all();
-        return view('user.index', compact('user'));
+        return view('pages.admin.user.index', compact('user'));
     }
 
     /**
@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        return view('pages.admin.user.create');
     }
 
     /**
@@ -50,7 +50,7 @@ class UserController extends Controller
             'password' => $password
         ]);
 
-        return redirect()->route('user.home')->with('success', 'Data user berhasil ditambahkan');
+        return redirect()->route('pages.admin.user.home')->with('success', 'Data user berhasil ditambahkan');
     }
 
     /**
@@ -67,7 +67,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('user.edit', compact('user'));
+        return view('pages.admin.user.edit', compact('user'));
     }
 
     /**
@@ -94,7 +94,7 @@ class UserController extends Controller
 
         User::where('id', $id)->update($newData);
 
-        return redirect()->route('user.home')->with('success', 'Data user berhasil diubah');
+        return redirect()->route('pages.admin.user.home')->with('success', 'Data user berhasil diubah');
     }
 
     /**
@@ -105,7 +105,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return redirect()->route('user.home')->with('success', 'Berhasil Menghapus Data');
+        return redirect()->route('pages.admin.user.home')->with('success', 'Berhasil Menghapus Data');
     }
 
 

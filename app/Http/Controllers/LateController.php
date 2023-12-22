@@ -17,7 +17,7 @@ class LateController extends Controller
     {
         $lates = Late::with('student')->get();
         $student = Student::all();
-        return view('keterlambatan.index', compact('lates', 'student'));
+        return view('pages.admin.keterlambatan.index', compact('lates', 'student'));
     }
 
     public function rekap()
@@ -27,7 +27,7 @@ class LateController extends Controller
             ->groupBy('student_id')
             ->get();
 
-        return view('keterlambatan.rekap', compact('rekap'));
+        return view('pages.admin.keterlambatan.rekap', compact('rekap'));
     }
 
     /**
@@ -37,7 +37,7 @@ class LateController extends Controller
     {
         $lates = Late::with('student')->get();
         $student = Student::all();
-        return view('keterlambatan.create', compact('lates', 'student'));
+        return view('pages.admin.keterlambatan.create', compact('lates', 'student'));
     }
 
     /**
@@ -64,7 +64,7 @@ class LateController extends Controller
 
         $late->save();
 
-        return redirect()->route('late.home')->with('success', 'Berhasil menambah data Keterlambatan');
+        return redirect()->route('pages.admin.late.home')->with('success', 'Berhasil menambah data Keterlambatan');
     }
 
 
@@ -76,7 +76,7 @@ class LateController extends Controller
         $students = Student::findOrFail($id);
         $lates = Late::with('student')->where('student_id', $id)->get();
 
-        return view('keterlambatan.show', compact('students', 'lates'));
+        return view('pages.admin.keterlambatan.show', compact('students', 'lates'));
     }
 
 
@@ -88,7 +88,7 @@ class LateController extends Controller
         $lates = Late::with('student')->find($id);
         $students = Student::all();
 
-        return view('keterlambatan.edit', compact('lates', 'students'));
+        return view('pages.admin.keterlambatan.edit', compact('lates', 'students'));
     }
 
     /**
@@ -125,7 +125,7 @@ class LateController extends Controller
 
         $late->save();
 
-        return redirect()->route('late.home')->with('success', 'Berhasil memperbarui data Keterlambatan');
+        return redirect()->route('pages.admin.late.home')->with('success', 'Berhasil memperbarui data Keterlambatan');
     }
 
     /**
@@ -135,6 +135,6 @@ class LateController extends Controller
     {
         Late::where('id', $id)->delete();
 
-        return redirect()->route('late.home')->with('success', 'Berhasil Menghapus Data');
+        return redirect()->route('pages.admin.late.home')->with('success', 'Berhasil Menghapus Data');
     }
 }

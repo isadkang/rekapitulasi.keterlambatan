@@ -20,6 +20,10 @@
         <div class="relative top-6 overflow-x-auto shadow-md sm:rounded-lg" id="table">
             <input type="text" id="search" onkeyup="tableSearch()" placeholder="Cari data..."
                 title="Type in a name" class="rounded-md mb-5">
+                <div id="not-found-message" class="bg-red-300 text-center w-full py-2 text-black font-semibold mt-2 hidden">
+                    Data not found.
+                </div>
+
             <table id="table" class="w-full text-sm text-center rtl:text-right  text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -88,19 +92,32 @@
 
 <script>
     function tableSearch() {
-        const input = document.getElementById('search')
+        const input = document.getElementById('search');
         const filter = input.value.toUpperCase();
         const table = document.getElementById("table");
         const tr = table.getElementsByTagName("tr");
+
         for (let i = 0; i < tr.length; i++) {
-            const td = tr[i].getElementsByTagName("td")[0];
-            if (td) {
-                const txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
+            const tds = tr[i].getElementsByTagName("td");
+            let found = false;
+
+            for (let j = 1; j < tds.length - 1; j++) { // Skip the first and last column (No and Action)
+                const td = tds[j];
+                if (td) {
+                    const txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
                 }
+            }
+
+            tr[i].style.display = found ? "" : "none";
+            const notFoundMessage = document.getElementById('not-found-message');
+            if (!found) {
+                notFoundMessage.classList.remove('hidden');
+            } else {
+                notFoundMessage.classList.add('hidden');
             }
         }
     }

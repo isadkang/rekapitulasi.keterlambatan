@@ -17,7 +17,7 @@
         </div>
 
         <div class="relative top-6 overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-center rtl:text-right  text-gray-500 dark:text-gray-400">
+            <table  class="w-full text-sm text-center rtl:text-right  text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
@@ -45,12 +45,12 @@
                                 {{ $item->rayon }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ $item->user->name }}
+                                {{ $item->user->name}}
                             </td>
                             <td class="flex gap-2 justify-center items-center">
                                 <a href="{{ route('rayon.edit', $item['id']) }}"
                                     class="py-2 px-4 bg-green-500 hover:bg-green-600 transition duration-300 rounded-md text-white font-medium">Edit</a>
-                                <form method="POST" action="{{ route('student.delete', $item->id) }}"
+                                <form method="POST" action="{{ route('rayon.delete', $item->id) }}"
                                     onsubmit="return confirm('Are You Sure Want To Delete This?')">
                                     @csrf
                                     @method('DELETE')

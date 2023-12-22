@@ -42,7 +42,7 @@
                             </td>
                             <td class="flex gap-2 justify-center items-center">
                                 <a href="{{ route('rombel.edit', $item['id']) }} " class="py-2 px-4 bg-green-500 hover:bg-green-600 transition duration-300 rounded-md text-white font-medium">Edit</a>
-                                <form method="POST" action="{{ route('student.delete', $item->id) }}" onsubmit="return confirm('Are You Sure Want To Delete This?')">
+                                <form method="POST" action="{{ route('rombel.delete', $item->id) }}" onsubmit="return confirm('Are You Sure Want To Delete This?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="py-2 px-4 bg-red-500 hover:bg-red-600 transition duration-300 rounded-md text-white font-medium">

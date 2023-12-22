@@ -16,7 +16,7 @@ class StudentController extends Controller
     public function index()
     {
         $student = Student::with('rayon', 'rombel')->get();
-        return view('siswa.index', compact('student'));
+        return view('pages.admin.siswa.index', compact('student'));
     }
 
     /**
@@ -27,7 +27,7 @@ class StudentController extends Controller
         $student = Student::with('rombel', 'rayon')->get();
         $rombel = Rombel::all();
         $rayon = Rayon::all();
-        return view('siswa.create', compact('student', 'rombel', 'rayon'));
+        return view('pages.admin.siswa.create', compact('student', 'rombel', 'rayon'));
     }
 
     /**
@@ -44,7 +44,7 @@ class StudentController extends Controller
 
         Student::create($request->all());
 
-        return redirect()->route('student.home')->with('success', 'Data Siswa Berhasil Ditambah');
+        return redirect()->route('pages.admin.student.home')->with('success', 'Data Siswa Berhasil Ditambah');
     }
 
     /**
@@ -63,7 +63,7 @@ class StudentController extends Controller
         $students = Student::with('rayon', 'rombel')->find($id);
         $rombel = Rombel::all();
         $rayon = Rayon::all();
-        return view('siswa.edit', compact('students', 'rombel', 'rayon'));
+        return view('pages.admin.siswa.edit', compact('students', 'rombel', 'rayon'));
     }
 
     /**
@@ -85,7 +85,7 @@ class StudentController extends Controller
             'rayon_id' => $request->rayon_id
         ]);
 
-        return redirect()->route('student.home')->with('success', 'Data Siswa Berhasil Diubah');
+        return redirect()->route('pages.admin.student.home')->with('success', 'Data Siswa Berhasil Diubah');
     }
 
     /**
@@ -95,6 +95,6 @@ class StudentController extends Controller
     {
         Student::where('id', $id)->delete();
 
-        return redirect()->route('student.home')->with('success', 'Berhasil Menghapus Data');
+        return redirect()->route('pages.admin.student.home')->with('success', 'Berhasil Menghapus Data');
     }
 }
