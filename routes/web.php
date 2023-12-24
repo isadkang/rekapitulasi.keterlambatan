@@ -95,6 +95,8 @@ Route::middleware(['IsLogin', 'IsAdmin'])->group(function () {
         Route::get('/edit/{id}', [LateController::class, 'edit'])->name('edit');
         Route::patch('/edit/{id}', [LateController::class, 'update'])->name('update');
         Route::delete('/delete/{id}', [LateController::class, 'destroy'])->name('delete');
+        Route::get('/print/{id}', [LateController::class, 'print'])->name('print');
+        Route::get('/download/{id}', [LateController::class, 'downloadPDF'])->name('download');
     });
 });
 

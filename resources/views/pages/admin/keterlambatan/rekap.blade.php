@@ -63,7 +63,7 @@
                             </td>
                             <td>
                                 @if ($item->total >= 3)
-                                    <a href="#"
+                                    <a href="{{ route('late.print', $item->student_id )}}"
                                         class=" text-white bg-red-500 hover:bg-red-700 duration-300 px-2 py-3 rounded-md">Cetak
                                         Surat Pernyataan</a>
                                 @endif

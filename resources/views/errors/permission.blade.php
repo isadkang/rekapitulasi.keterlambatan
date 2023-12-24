@@ -17,7 +17,7 @@
         @if (Auth::user()->role == 'admin')
             <a href="{{ route('home.page') }}" class="text-white px-4 py-2 bg-blue-500 hover:bg-blue-700 duration-300 rounded-md mt-5">Back</a>
         @else
-            <a href="{{ route('ps.ps.home') }}" class="text-white px-4 py-2 bg-blue-500 hover:bg-blue-700 duration-300 rounded-md mt-5">Back</a>
+            <a href="{{ route('pemb.ps.home') }}" class="text-white px-4 py-2 bg-blue-500 hover:bg-blue-700 duration-300 rounded-md mt-5">Back</a>
         @endif
     </div>
 </body>

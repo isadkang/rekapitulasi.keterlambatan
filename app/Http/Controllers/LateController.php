@@ -7,6 +7,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class LateController extends Controller
 {
@@ -17,6 +18,7 @@ class LateController extends Controller
     {
         $lates = Late::with('student')->get();
         $student = Student::all();
+
         return view('pages.admin.keterlambatan.index', compact('lates', 'student'));
     }
 
@@ -26,6 +28,7 @@ class LateController extends Controller
             ->select('student_id', DB::raw('count(*) as total'))
             ->groupBy('student_id')
             ->get();
+        // dd($rekap);
 
         return view('pages.admin.keterlambatan.rekap', compact('rekap'));
     }
@@ -64,7 +67,7 @@ class LateController extends Controller
 
         $late->save();
 
-        return redirect()->route('pages.admin.late.home')->with('success', 'Berhasil menambah data Keterlambatan');
+        return redirect()->route('late.home')->with('success', 'Berhasil menambah data Keterlambatan');
     }
 
 
@@ -75,9 +78,19 @@ class LateController extends Controller
     {
         $students = Student::findOrFail($id);
         $lates = Late::with('student')->where('student_id', $id)->get();
-
+        
         return view('pages.admin.keterlambatan.show', compact('students', 'lates'));
     }
+    
+    /**
+     * Print out the pdf keterlambatan
+     */
+    public function print(Late $lates, $id) 
+    {
+        $data = Student::findOrFail($id);
+        // dd($data);
+        return view('pages.admin.keterlambatan.print', compact('data'));
+    } 
 
 
     /**
@@ -136,5 +149,15 @@ class LateController extends Controller
         Late::where('id', $id)->delete();
 
         return redirect()->route('pages.admin.late.home')->with('success', 'Berhasil Menghapus Data');
+    }
+
+    public function downloadPDF($id) {
+        $data = Student::find($id)->toArray();
+
+        view()->share('data', $data);
+
+        $pdf = PDF::loadView('pages.admin.keterlambatan.download-pdf', $data);
+
+        return $pdf->download('Surat Pernyataan.pdf');
     }
 }
