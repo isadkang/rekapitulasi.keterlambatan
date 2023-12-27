@@ -50,5 +50,7 @@ class User extends Authenticatable
         return $this->hasMany(Rayon::class, 'user_id', 'id');
     }
 
+   
+
 
 }

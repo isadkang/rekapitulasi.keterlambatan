@@ -1,16 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Exports\LatesExport;
 use App\Models\Late;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Excel;
+
 
 class LateController extends Controller
 {
+
+    public function export()
+    {
+        $fileName = 'data_keterlambatan'.'.xlsx';
+        return Excel::download(new \App\Exports\LatesExport, $fileName);
+
+    }
     /**
      * Display a listing of the resource.
      */
@@ -87,7 +96,7 @@ class LateController extends Controller
      */
     public function print(Late $lates, $id) 
     {
-        $data = Student::findOrFail($id);
+        $data = Student::with('rayon', 'rombel')->findOrFail($id);
         // dd($data);
         return view('pages.admin.keterlambatan.print', compact('data'));
     } 
@@ -152,12 +161,20 @@ class LateController extends Controller
     }
 
     public function downloadPDF($id) {
-        $data = Student::find($id)->toArray();
-
-        view()->share('data', $data);
-
-        $pdf = PDF::loadView('pages.admin.keterlambatan.download-pdf', $data);
-
-        return $pdf->download('Surat Pernyataan.pdf');
+        try {
+            $data = Student::with('rayon', 'rombel')->findOrFail($id)->toArray();
+    
+            view()->share('data', $data);
+    
+            $pdf = PDF::loadView('pages.admin.keterlambatan.downloadpdf', $data);
+    
+            return $pdf->download('Surat Pernyataan.pdf');
+            
+            return redirect()->route('late.rekap')->with('printed', 'PDF BERHASIL DI CETAK!');
+        } finally {
+            \Log::info('PDF berhasil diunduh untuk mahasiswa dengan ID ' . $id);
+        }
     }
+    
+    
 }

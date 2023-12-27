@@ -10,10 +10,14 @@
             <div class=" bg-green-300 bg-opacity-50 px-2 py-4 rounded-md flex justify-center items-center mb-5">
                 {{ Session::get('success') }}</div>
         @endif
+        @if (Session::get('printed'))
+            <div class=" bg-green-300 bg-opacity-50 px-2 py-4 rounded-md flex justify-center items-center mb-5">
+                {{ Session::get('printed') }}</div>
+        @endif
         <div id="handle">
             <a href="{{ route('late.create') }}"
                 class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 transition duration-300 rounded-md text-white font-medium mb-5">Tambah</a>
-            <a href="#"
+            <a href="{{ route('late.export') }}"
                 class="py-2 px-4 bg-blue-500 hover:bg-blue-600 transition duration-300 rounded-md text-white font-medium mb-5">Export
                 Data Keterlambatan</a>
         </div>

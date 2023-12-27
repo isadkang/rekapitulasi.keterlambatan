@@ -97,6 +97,7 @@ Route::middleware(['IsLogin', 'IsAdmin'])->group(function () {
         Route::delete('/delete/{id}', [LateController::class, 'destroy'])->name('delete');
         Route::get('/print/{id}', [LateController::class, 'print'])->name('print');
         Route::get('/download/{id}', [LateController::class, 'downloadPDF'])->name('download');
+        Route::get('/export', [LateController::class, 'export'])->name('export');
     });
 });
 

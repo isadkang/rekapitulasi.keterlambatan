@@ -13,7 +13,7 @@
         <div class="handle">
             <a href="{{ route('late.create') }}"
                 class="py-2 px-4 bg-yellow-500 hover:bg-yellow-600 transition duration-300 rounded-md text-white font-medium mb-5">Tambah</a>
-            <a href="#"
+            <a href="{{ route('late.export') }}"
                 class="py-2 px-4 bg-blue-500 hover:bg-blue-600 transition duration-300 rounded-md text-white font-medium mb-5">Export
                 Data Keterlambatan</a>
         </div>
@@ -65,9 +65,6 @@
                                 <div class="mb-4">
                                     <a href="{{ route('late.edit', $item['id']) }}"
                                         class=" py-2 px-4 bg-green-500 hover:bg-green-600 transition duration-300 rounded-md text-white font-medium">Edit</a>
-                                </div>
-                                <div class="">
-                                    
                                 </div>
                                 <form method="POST" action="{{ route('late.delete', $item->id) }}"
                                     onsubmit="return confirm('Are You Sure Want To Delete This?')">

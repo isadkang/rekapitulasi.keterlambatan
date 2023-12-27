@@ -8,7 +8,7 @@
     <style>
       body {
         width: 100%;
-        height: 100vh;
+        height: 100%;
         margin: 0;
         padding: 0;
         background-color: #FAFAFA;
@@ -52,8 +52,8 @@
 
         html,
         body {
-          width: 210mm;
-          height: 297mm;
+          width: 100mm;
+          height: 500mm;
         }
 
         .page {
@@ -73,16 +73,6 @@
   <body>
     <div class="book">
       <div class="page" id="result">
-        <a
-          href="{{ route('late.rekap') }}"
-          style="text-decoration: none;	background-color: rgb(99 102 241);color: white; font-weight: 400; padding: 6px 12px;border-radius: 2px;"
-          >Back</a
-        >
-        <a
-          href="{{ route('late.download', $data['id']) }}"
-          style="float:right; 	background-color: rgb(245 158 11); font-weight: 400; padding: 6px 12px;border-radius: 2px; color: white;"
-          >Cetak PDF</a
-        >
         <div style="text-align: center;">
           <h4>SURAT PERNYATAAN</h4>
           <h4>TIDAK AKAN DATANG TERLAMBAT KESEKOLAH</h4>
@@ -94,22 +84,22 @@
           <tr>
             <td style="width: 100px;">NIS</td>
             <td>:</td>
-            <td>{{ $data->nis }}</td>
+            <td>{{ $data['nis'] }}</td>
           </tr>
           <tr>
             <td style="width: 100px;">Nama</td>
             <td>:</td>
-            <td>{{ $data->name }}</td>
+            <td>{{ $data['name'] }}</td>
           </tr>
           <tr>
             <td style="width: 100px;">Rombel</td>
             <td>:</td>
-            <td>{{ $data->rombel->rombel }}</td>
+            <td>{{ $data['rombel']['rombel'] }}</td>
           </tr>
           <tr>
-            <td style="width: 100px;">Negara</td>
+            <td style="width: 100px;">Rayon</td>
             <td>:</td>
-            <td>{{ $data->rayon->rayon }}</td>
+            <td>{{ $data['rayon']['rayon'] }}</td>
           </tr>
         </table>
         <p style="margin-top: 30px;line-height:1.5;">
@@ -134,16 +124,22 @@
             <p style="margin-top: 100px;">(......................)</p>
           </div>
         </div>
-        <div style="margin-top: 110px;float:left; ">
+        <div style="margin-top: 110px;float:left; "> 
           <div style="width: 250px;text-align: center;">
             <p>Peserta Didik,</p>
-            <p style="margin-top: 100px;">{{ $data->name }}</p>
+            <p style="margin-top: 100px;">{{ $data['name'] }}</p>
           </div>
         </div>
         <div style="margin-top: 50px;float:left; ">
           <div style="width: 250px;text-align: center;">
             <p>Pembimbing Siswa,</p>
-            <p style="margin-top: 100px;">{{ $data->rayon->user->name }}</p>
+            <p style="margin-top: 100px;">
+              @foreach($data['rayon'] as $rayon)
+                    @if(is_array($rayon) && isset($rayon['user']))
+                      {{ $rayon['user']['name'] }}
+                    @endif
+            @endforeach
+            </p>
           </div>
         </div>
         <div style="margin-top: 50px;float:right; ">

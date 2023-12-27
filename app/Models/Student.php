@@ -27,4 +27,6 @@ class Student extends Model
     public function late() {
         return $this->hasMany(Late::class, 'student_id', 'id');
     }
+
+    
 }

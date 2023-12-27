@@ -44,7 +44,7 @@ class StudentController extends Controller
 
         Student::create($request->all());
 
-        return redirect()->route('pages.admin.student.home')->with('success', 'Data Siswa Berhasil Ditambah');
+        return redirect()->route('student.home')->with('success', 'Data Siswa Berhasil Ditambah');
     }
 
     /**
