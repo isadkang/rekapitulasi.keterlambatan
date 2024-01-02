@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 use App\Exports\LatesExport;
 use App\Models\Late;
 use App\Models\Student;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Excel;
-
+use Illuminate\Support\Facades\Log;
 
 class LateController extends Controller
 {
