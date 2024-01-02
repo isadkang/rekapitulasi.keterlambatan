@@ -17,7 +17,7 @@ class RayonController extends Controller
     {
         $rayon = Rayon::with('user')->get();
 
-        return view('rayon.index', compact('rayon'));
+        return view('pages.admin.rayon.index', compact('rayon'));
     }
     
     /**
@@ -27,7 +27,7 @@ class RayonController extends Controller
     {
         $rayon = Rayon::with('user')->get();
         $user = User::all();
-        return view('rayon.create', compact('rayon', 'user'));
+        return view('pages.admin.rayon.create', compact('rayon', 'user'));
     }
 
     /**
@@ -42,7 +42,7 @@ class RayonController extends Controller
 
         Rayon::create($request->all());
 
-        return redirect()->route('pages.admin.rayon.home')->with('success', 'Data Rayon Berhasil di tambahkan');
+        return redirect()->route('rayon.home')->with('success', 'Data Rayon Berhasil di tambahkan');
     }
 
     /**
@@ -78,7 +78,7 @@ class RayonController extends Controller
             'user_id' => $request->user_id
         ]);
 
-        return redirect()->route('pages.admin.rayon.home')->with('success', 'Data Berhasil Di Ubah');
+        return redirect()->route('rayon.home')->with('success', 'Data Berhasil Di Ubah');
     }
 
     /**
@@ -89,6 +89,6 @@ class RayonController extends Controller
         $rayon = Rayon::find($id);
         $rayon->delete();
 
-        return redirect()->route('pages.admin.student.home')->with('success', 'Berhasil Menghapus Data');
+        return redirect()->route('rayon.home')->with('success', 'Berhasil Menghapus Data');
     }
 }

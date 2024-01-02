@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rayon;
+use App\Models\Rombel;
+use App\Models\Student;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
@@ -50,7 +53,7 @@ class UserController extends Controller
             'password' => $password
         ]);
 
-        return redirect()->route('pages.admin.user.home')->with('success', 'Data user berhasil ditambahkan');
+        return redirect()->route('user.home')->with('success', 'Data user berhasil ditambahkan');
     }
 
     /**
@@ -94,7 +97,7 @@ class UserController extends Controller
 
         User::where('id', $id)->update($newData);
 
-        return redirect()->route('pages.admin.user.home')->with('success', 'Data user berhasil diubah');
+        return redirect()->route('user.home')->with('success', 'Data user berhasil diubah');
     }
 
     /**
@@ -105,7 +108,7 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return redirect()->route('pages.admin.user.home')->with('success', 'Berhasil Menghapus Data');
+        return redirect()->route('user.home')->with('success', 'Berhasil Menghapus Data');
     }
 
 
@@ -122,9 +125,16 @@ class UserController extends Controller
         if (Auth::attempt($user)) {
             $role = Auth::user();
             if ($role->role == 'admin') {
-                return redirect()->route('home.page');
-            } else if ($role->role == 'ps') {
-                return redirect()->route('pemb.ps.home');
+                $student = Student::count();
+                $rombel = Rombel::count();
+                $rayon = Rayon::count();
+                $admin = User::where('role', 'admin')->count();
+                $ps = User::where('role', 'ps')->count();
+                return view('pages.admin.home', compact('student', 'rombel', 'rayon', 'admin', 'ps'));
+            } 
+            if ($role->role == 'ps') {
+                $student = Student::count();
+                return view('pages.pembimbing.home', compact('student'));
             }
         } else {
             return redirect()->back()->with('failed', 'Proses login gagal, silahkan coba lagi dengan data yang benar!');

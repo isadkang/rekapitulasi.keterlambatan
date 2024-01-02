@@ -147,7 +147,7 @@ class LateController extends Controller
 
         $late->save();
 
-        return redirect()->route('pages.admin.late.home')->with('success', 'Berhasil memperbarui data Keterlambatan');
+        return redirect()->route('late.home')->with('success', 'Berhasil memperbarui data Keterlambatan');
     }
 
     /**

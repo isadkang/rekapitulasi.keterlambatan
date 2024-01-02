@@ -20,7 +20,7 @@
                     <div class="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-2">
                         <span class="text-3xl bg-slate-200 rounded-full"><iconify-icon
                                 icon="fa6-solid:street-view"></iconify-icon></span>
-                        <p class="text-3xl font-semibold text-blue-700">{{ App\Models\Student::count() }}</p>
+                        <p class="text-3xl font-semibold text-blue-700">{{ $student }}</p>
                     </div>
                 </div>
                 <div
@@ -30,7 +30,7 @@
                         <span class="text-3xl bg-slate-200 rounded-full"><iconify-icon
                                 icon="fa6-solid:street-view"></iconify-icon></span>
                         <p class="text-3xl font-semibold text-blue-700">
-                            {{ App\Models\User::where('role', 'admin')->count() }}</p>
+                            {{ $admin }}</p>
                     </div>
                 </div>
                 <div
@@ -41,7 +41,7 @@
                         <span class="text-3xl bg-slate-200 rounded-full"><iconify-icon
                                 icon="fa6-solid:street-view"></iconify-icon></span>
                         <p class="text-3xl font-semibold text-blue-700">
-                            {{ App\Models\User::where('role', 'ps')->count() }}</p>
+                            {{ $ps }}</p>
                     </div>
                 </div>
 
@@ -51,7 +51,7 @@
                     <div class="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-2">
                         <span class="text-3xl rounded-full"><iconify-icon icon="fa6-solid:book-open"></iconify-icon></span>
 
-                        <p class="text-3xl font-semibold text-blue-700">{{ App\Models\Rombel::count() }}</p>
+                        <p class="text-3xl font-semibold text-blue-700">{{ $rombel }}</p>
                     </div>
                 </div>
                 <div
@@ -59,7 +59,7 @@
                     <h5 class="mb-5 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Rayon</h5>
                     <div class="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-2">
                         <span class="text-3xl rounded-full"><iconify-icon icon="fa6-solid:book-open"></iconify-icon></span>
-                        <p class="text-3xl font-semibold text-blue-700">{{ App\Models\Rayon::count() }}</p>
+                        <p class="text-3xl font-semibold text-blue-700">{{ $rayon }}</p>
                     </div>
                 </div>
             </div>

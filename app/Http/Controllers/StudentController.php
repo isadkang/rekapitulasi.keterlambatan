@@ -85,7 +85,7 @@ class StudentController extends Controller
             'rayon_id' => $request->rayon_id
         ]);
 
-        return redirect()->route('pages.admin.student.home')->with('success', 'Data Siswa Berhasil Diubah');
+        return redirect()->route('student.home')->with('success', 'Data Siswa Berhasil Diubah');
     }
 
     /**
@@ -95,6 +95,6 @@ class StudentController extends Controller
     {
         Student::where('id', $id)->delete();
 
-        return redirect()->route('pages.admin.student.home')->with('success', 'Berhasil Menghapus Data');
+        return redirect()->route('student.home')->with('success', 'Berhasil Menghapus Data');
     }
 }
