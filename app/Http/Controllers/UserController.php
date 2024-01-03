@@ -6,9 +6,11 @@ use App\Models\Rayon;
 use App\Models\Rombel;
 use App\Models\Student;
 use App\Models\User;
+use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -111,13 +113,23 @@ class UserController extends Controller
         return redirect()->route('user.home')->with('success', 'Berhasil Menghapus Data');
     }
 
+    public function dashboardPs()
+    {
+        $rayon = Rayon::where('user_id', Auth::user()->id)->first();
+        $student = Student::where('rayon_id', $rayon->id)->count();
+        $today = Carbon::now()->format('Y-m-d');
+        $latenessCount = DB::table('lates')
+            ->where('student_id', $rayon->id)
+            ->whereDate('created_at', '=', $today)
+            ->count();
+
+        return view('pages.pembimbing.home', compact('rayon', 'student', 'latenessCount'));
+    }
 
     public function loginAuth(Request $request)
     {
-
-
         $request->validate([
-            'email' => 'required|email:dns',
+            'email' => 'required',
             'password' => 'required'
         ]);
 
@@ -125,16 +137,10 @@ class UserController extends Controller
         if (Auth::attempt($user)) {
             $role = Auth::user();
             if ($role->role == 'admin') {
-                $student = Student::count();
-                $rombel = Rombel::count();
-                $rayon = Rayon::count();
-                $admin = User::where('role', 'admin')->count();
-                $ps = User::where('role', 'ps')->count();
-                return view('pages.admin.home', compact('student', 'rombel', 'rayon', 'admin', 'ps'));
-            } 
+                return redirect()->route('home.page');
+            }
             if ($role->role == 'ps') {
-                $student = Student::count();
-                return view('pages.pembimbing.home', compact('student'));
+                return redirect()->route('pemb.ps.home');
             }
         } else {
             return redirect()->back()->with('failed', 'Proses login gagal, silahkan coba lagi dengan data yang benar!');

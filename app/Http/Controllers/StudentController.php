@@ -6,6 +6,7 @@ use App\Models\Rayon;
 use App\Models\Rombel;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use PHPUnit\Framework\MockObject\Builder\Stub;
 
 class StudentController extends Controller
@@ -16,6 +17,13 @@ class StudentController extends Controller
     public function index()
     {
         $student = Student::with('rayon', 'rombel')->get();
+        return view('pages.admin.siswa.index', compact('student'));
+    }
+
+    public function indexPs()
+    {
+        $rayon = Rayon::where('user_id', Auth::user()->id)->first();
+        $student = Student::with('rayon', 'rombel')->where('rayon_id', $rayon->id)->get();
         return view('pages.admin.siswa.index', compact('student'));
     }
 

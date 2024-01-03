@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 use App\Exports\LatesExport;
 use App\Models\Late;
+use App\Models\Rayon;
 use App\Models\Student;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
+use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use Excel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class LateController extends Controller
@@ -18,8 +21,12 @@ class LateController extends Controller
 
     public function export()
     {
-        $fileName = 'data_keterlambatan'.'.xlsx';
-        return Excel::download(new \App\Exports\LatesExport, $fileName);
+        if (Auth::user()->role == 'admin') {
+            return Excel::download(new \App\Exports\LatesExport, 'data_keterlambatan.xlsx');
+        } else {
+            $rayon = Rayon::where('user_id', Auth::user()->id)->first();
+            return Excel::download(new \App\Exports\LatesExport, 'data_keterlambatan '.$rayon->rayon.'.xlsx');
+        }
 
     }
     /**
@@ -29,8 +36,28 @@ class LateController extends Controller
     {
         $lates = Late::with('student')->get();
         $student = Student::all();
-
+        
         return view('pages.admin.keterlambatan.index', compact('lates', 'student'));
+    }
+    
+    public function indexPs() {
+        $rayon = Rayon::where('user_id', Auth::user()->id)->first();
+        $student = Student::where('rayon_id', $rayon->id)->get();
+        // dd($student);
+        $lates = Late::where('student_id', $rayon->id)->get();
+
+        return view('pages.admin.keterlambatan.index', compact('student', 'lates'));
+    }
+
+    public function rekapPs() {
+        $rayon = Rayon::where('user_id', Auth::user()->id)->first();
+        $rekaps = Late::with('student')
+            ->select('student_id', DB::raw('count(*) as total'))
+            ->groupBy('student_id')
+            ->where('student_id', $rayon->id)
+            ->get();
+
+        return view('pages.admin.keterlambatan.rekap', compact('rekaps'));
     }
 
     public function rekap()
@@ -159,7 +186,7 @@ class LateController extends Controller
     {
         Late::where('id', $id)->delete();
 
-        return redirect()->route('pages.admin.late.home')->with('success', 'Berhasil Menghapus Data');
+        return redirect()->route('late.home')->with('success', 'Berhasil Menghapus Data');
     }
 
     public function downloadPDF($id) {

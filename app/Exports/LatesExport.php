@@ -4,6 +4,8 @@
 namespace App\Exports;
 
 use App\Models\Late;
+use App\Models\Rayon;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -14,10 +16,19 @@ class LatesExport implements FromCollection, WithHeadings, WithMapping
 {
     public function collection()
     {
-        return Late::with('student')
-        ->select('student_id', DB::raw('count(*) as total'))
-        ->groupBy('student_id')
-        ->get();
+        if (Auth::user()->role == 'admin') {
+            return Late::with('student')
+                ->select('student_id', DB::raw('count(*) as total'))
+                ->groupBy('student_id')
+                ->get();
+        } else {
+            $rayon = Rayon::where('user_id', Auth::user()->id)->first();
+            return Late::with('student')
+                ->select('student_id', DB::raw('count(*) as total'))
+                ->groupBy('student_id')
+                ->where('student_id', $rayon->id)
+                ->get();
+        }
     }
 
     public function headings(): array

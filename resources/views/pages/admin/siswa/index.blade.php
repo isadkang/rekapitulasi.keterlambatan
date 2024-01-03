@@ -18,11 +18,11 @@
                 Data Siswa</a>
         </div>
         <div class="relative top-6 overflow-x-auto shadow-md sm:rounded-lg" id="table">
-            <input type="text" id="search" onkeyup="tableSearch()" placeholder="Cari data..."
-                title="Type in a name" class="rounded-md mb-5">
-                <div id="not-found-message" class="bg-red-300 text-center w-full py-2 text-black font-semibold mt-2 hidden">
-                    Data not found.
-                </div>
+            <input type="text" id="search" onkeyup="tableSearch()" placeholder="Cari data..." title="Type in a name"
+                class="rounded-md mb-5">
+            <div id="not-found-message" class="bg-red-300 text-center w-full py-2 text-black font-semibold mt-2 hidden">
+                Data not found.
+            </div>
 
             <table id="table" class="w-full text-sm text-center rtl:text-right  text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -42,9 +42,11 @@
                         <th scope="col" class="px-6 py-3">
                             Rayon
                         </th>
-                        <th scope="col" class="px-6 py-3">
-                            Action
-                        </th>
+                        @if (Auth::user()->role == 'admin')
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                            </th>
+                        @endif
                     </tr>
                 </thead>
                 @php $no = 1 @endphp
@@ -66,21 +68,25 @@
                             <td class="px-6 py-4">
                                 {{ $item->rayon['rayon'] }}
                             </td>
-                            <td class="flex gap-2 justify-center items-center">
-                                <a href="{{ route('student.edit', $item['id']) }} "
-                                    class="py-2 px-4 bg-green-500 hover:bg-green-600 transition duration-300 rounded-md text-white font-medium">Edit</a>
-                                <form method="POST" action="{{ route('student.delete', $item->id) }}"
-                                    onsubmit="return confirm('Are You Sure Want To Delete This?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="py-2 px-4 bg-red-500 hover:bg-red-600 transition duration-300 rounded-md text-white font-medium">
-                                        Delete
-                                    </button>
-                                </form>
+                            @if (Auth::user()->role == 'admin')
+                                <td class="flex gap-2 justify-center items-center">
+                                    <a href="{{ route('student.edit', $item['id']) }} "
+                                        class="py-2 px-4 bg-green-500 hover:bg-green-600 transition duration-300 rounded-md text-white font-medium">Edit</a>
+                                    <form method="POST" action="{{ route('student.delete', $item->id) }}"
+                                        onsubmit="return confirm('Are You Sure Want To Delete This?')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                </form>
-                            </td>
+                                        <button type="submit"
+                                            class="py-2 px-4 bg-red-500 hover:bg-red-600 transition duration-300 rounded-md text-white font-medium">
+                                            Delete
+                                        </button>
+                                    </form>
+
+                                    </form>
+                                </td>
+                            @endif
+
                         </tr>
                     </tbody>
                 @endforeach

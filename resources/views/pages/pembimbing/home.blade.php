@@ -16,7 +16,7 @@
             <div class="card grid grid-cols-3 gap-5">
                 <div
                     class="block max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-5 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Peserta Didik Rayon </h5>
+                    <h5 class="mb-5 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Peserta Didik Rayon {{$rayon->rayon}}</h5>
                     <div class="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-2">
                         <span class="text-3xl bg-slate-200 rounded-full"><iconify-icon
                                 icon="fa6-solid:street-view"></iconify-icon></span>
@@ -25,12 +25,12 @@
                 </div>
                 <div
                     class="block max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                    <h5 class="mb-5 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Administrator</h5>
+                    <h5 class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">Keterlambatan {{$rayon->rayon}} hari ini</h5>
+                    <p class="mb-5 text-md font-semibold tracking-tight text-gray-900 dark:text-white">{{ date("j F Y", time()) }}</p>
                     <div class="font-normal text-gray-700 dark:text-gray-400 flex items-center gap-2">
                         <span class="text-3xl bg-slate-200 rounded-full"><iconify-icon
                                 icon="fa6-solid:street-view"></iconify-icon></span>
-                        <p class="text-3xl font-semibold text-blue-700">
-                            {{ App\Models\User::where('role', 'admin')->count() }}</p>
+                        <p class="text-3xl font-semibold text-blue-700">{{ $latenessCount }}</p>
                     </div>
                 </div>
             </div>
