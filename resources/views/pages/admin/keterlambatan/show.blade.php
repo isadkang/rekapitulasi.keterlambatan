@@ -6,7 +6,11 @@
             <h2 class="text-3xl font-semibold mb-2">Detail Data Keterlambatan</h2>
             <div class="handle">
                 <a href="">Home</a>
-                <a href="{{route('late.rekap')}}" class="hover:text-blue-500">/ Rekapitulasi Data</a>
+                @if (Auth::user()->role == 'admin')
+                    <a href="{{ route('late.rekap') }}" class="hover:text-blue-500">/ Rekapitulasi Data</a>
+                @else
+                    <a href="{{ route('pemb.late.rekap') }}" class="hover:text-blue-500">/ Rekapitulasi Data</a>
+                @endif
                 <a href="" class="font-medium">/ Detail Data Keterlambatan</a>
             </div>
         </div>
@@ -19,13 +23,14 @@
                 $no = 1;
             @endphp
             @foreach ($lates as $item)
-                <div class="max-w-md p-3 shadow-md rounded mt-6  flex justify-center items-center flex-col outline outline-gray-200">
+                <div
+                    class="max-w-md p-3 shadow-md rounded mt-6  flex justify-center items-center flex-col outline outline-gray-200">
                     <h1 class="text-lg font-medium text-indigo-500">Keterlambatan ke-{{ $no++ }}</h1>
                     <p class="text-indigo-800 font-semibold">{{ $item->date_time_late }}</p>
                     <div class="px-2 py-6">
                         <img src="{{ asset('images/' . $item->bukti) }}" width="100" class="rounded-md">
                     </div>
-                    <p class="text-indigo-900 font-semibold">Alasan: {{ $item->information}}</p>
+                    <p class="text-indigo-900 font-semibold">Alasan: {{ $item->information }}</p>
                 </div>
             @endforeach
         </div>

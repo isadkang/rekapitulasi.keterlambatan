@@ -38,7 +38,7 @@ class RombelController extends Controller
             'rombel' => $request->rombel
         ]);
 
-        return redirect()->route('pages.admin.rombel.home')->with('success', 'Data Created Succesfuly');
+        return redirect()->route('rombel.home')->with('success', 'Data Created Succesfuly');
     }
 
     /**
@@ -71,7 +71,7 @@ class RombelController extends Controller
             'rombel' => $request->rombel
         ]);
 
-        return redirect()->route('pages.admin.rombel.home')->with('success', 'Data Rombel Berhasil Di Ubah');
+        return redirect()->route('rombel.home')->with('success', 'Data Rombel Berhasil Di Ubah');
     }
 
     /**

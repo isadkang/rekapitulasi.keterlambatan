@@ -103,19 +103,19 @@ Route::middleware(['IsLogin', 'IsAdmin'])->group(function () {
 
 Route::middleware(['IsLogin', 'IsPs'])->group(function () {
     Route::prefix('/ps')->name('pemb.')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('pages.pembimbing.home');
-        })->name('ps.home');
-        
+        Route::get('/dashboard', [UserController::class, 'dashboardPs'])->name('ps.home');
+
+        Route::prefix('/student')->name('student.')->group(function () {
+            Route::get('/', [StudentController::class, 'indexPs'])->name('home');
+        });
+
         Route::prefix('/late')->name('late.')->group(function () {
-            Route::get('/', [LateController::class, 'index'])->name('home');
+            Route::get('/', [LateController::class, 'indexPs'])->name('home');
             Route::get('/show/{id}', [LateController::class, 'show'])->name('show');
-            Route::get('/rekap', [LateController::class, 'rekap'])->name('rekap');
-            Route::get('/create', [LateController::class, 'create'])->name('create');
-            Route::post('/store', [LateController::class, 'store'])->name('store');
-            Route::get('/edit/{id}', [LateController::class, 'edit'])->name('edit');
-            Route::patch('/edit/{id}', [LateController::class, 'update'])->name('update');
-            Route::delete('/delete/{id}', [LateController::class, 'destroy'])->name('delete');
+            Route::get('/rekap', [LateController::class, 'rekapPs'])->name('rekap');
+            Route::get('/print/{id}', [LateController::class, 'print'])->name('print');
+            Route::get('/download/{id}', [LateController::class, 'downloadPDF'])->name('download');
+            Route::get('/export', [LateController::class, 'export'])->name('export');
         });
     });
 });
