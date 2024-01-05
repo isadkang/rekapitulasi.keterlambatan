@@ -126,8 +126,10 @@ class LateController extends Controller
     public function print(Late $lates, $id) 
     {
         $data = Student::with('rayon', 'rombel')->findOrFail($id);
-        // dd($data);
-        return view('pages.admin.keterlambatan.print', compact('data'));
+        $rayon = Rayon::with('user')->findOrFail($id);
+
+        // dd($rayon);
+        return view('pages.admin.keterlambatan.print', compact('data', 'rayon'));
     } 
 
 
@@ -192,8 +194,9 @@ class LateController extends Controller
     public function downloadPDF($id) {
         try {
             $data = Student::with('rayon', 'rombel')->findOrFail($id)->toArray();
-    
-            view()->share('data', $data);
+            $rayon = Rayon::with('user')->findOrFail($id)->toArray();
+
+            view()->share(['data' => $data, 'rayon' => $rayon]);
     
             $pdf = PDF::loadView('pages.admin.keterlambatan.downloadpdf', $data);
     
